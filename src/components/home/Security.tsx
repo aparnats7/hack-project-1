@@ -22,7 +22,7 @@ const Security = () => {
     {
       icon: <Lock className="h-8 w-8" />,
       title: 'End-to-End Encryption',
-      description: 'All your documents are encrypted from the moment they're uploaded until they're verified.',
+      description: 'All your documents are encrypted from the moment they\'re uploaded until they\'re verified.',
     },
     {
       icon: <ShieldCheck className="h-8 w-8" />,
