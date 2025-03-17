@@ -22,7 +22,10 @@ const Index = () => {
         // If the element is in view
         if (entry.isIntersecting) {
           entry.target.classList.add('animate-fade-in');
-          entry.target.style.opacity = '1';
+          // Set opacity directly on the HTMLElement
+          if (entry.target instanceof HTMLElement) {
+            entry.target.style.opacity = '1';
+          }
           // Unobserve after animation is triggered
           observer.unobserve(entry.target);
         }
