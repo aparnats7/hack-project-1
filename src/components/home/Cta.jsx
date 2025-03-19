@@ -1,7 +1,10 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '../../components/ui/button';
 import { ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Cta = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="py-16 md:py-24 bg-primary/5">
       <div className="section-container">
@@ -13,7 +16,7 @@ const Cta = () => {
             Join thousands of businesses that trust our platform for secure document verification. Get started in minutes.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button className="button-primary" size="lg">
+            <Button className="button-primary" size="lg" onClick={() => navigate('/signup')}>
               Get Started Now
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>

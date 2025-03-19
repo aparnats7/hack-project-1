@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from '../../components/ui/button';
 import { LockIcon, Menu, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,8 +38,8 @@ const Header = () => {
         </nav>
         
         <div className="hidden md:flex items-center space-x-4">
-          <Button variant="ghost" className="hover:bg-secondary">Log In</Button>
-          <Button className="rounded-lg">Sign Up</Button>
+          <Button variant="ghost" className="hover:bg-secondary" onClick={() => navigate('/login')}>Log In</Button>
+          <Button className="rounded-lg" onClick={() => navigate('/signup')}>Sign Up</Button>
         </div>
         
         {/* Mobile Menu Toggle */}
@@ -59,8 +61,8 @@ const Header = () => {
             <a href="#how-it-works" className="nav-link" onClick={() => setMobileMenuOpen(false)}>How It Works</a>
             <a href="#security" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Security</a>
             <div className="flex flex-col space-y-2 pt-2 border-t">
-              <Button variant="outline">Log In</Button>
-              <Button>Sign Up</Button>
+              <Button variant="outline" onClick={() => { navigate('/login'); setMobileMenuOpen(false); }}>Log In</Button>
+              <Button onClick={() => { navigate('/signup'); setMobileMenuOpen(false); }}>Sign Up</Button>
             </div>
           </nav>
         </div>

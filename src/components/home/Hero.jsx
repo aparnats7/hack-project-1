@@ -1,9 +1,11 @@
 import { useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { ShieldCheck, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
   const heroRef = useRef(null);
+  const navigate = useNavigate();
   
   useEffect(() => {
     const handleScroll = () => {
@@ -40,11 +42,11 @@ const Hero = () => {
             Ensure the authenticity of your documents using AI & Blockchain-powered verification. Fast, secure, and hassle-free.
           </p>
           <div className="flex flex-wrap gap-4 pt-4">
-            <Button className="button-primary">
+            <Button className="button-primary" onClick={() => navigate('/signup')}>
               Get Started
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
-            <Button variant="outline" className="button-secondary">
+            <Button variant="outline" className="button-secondary" onClick={() => navigate('/login')}>
               Try Demo
             </Button>
           </div>
