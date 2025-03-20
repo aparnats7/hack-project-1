@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Button } from '../../components/ui/button';
-import { LockIcon, Menu, X } from 'lucide-react';
+import { LockIcon, Menu, X, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '../../components/ui/dropdown-menu';
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -35,11 +41,29 @@ const Header = () => {
           <a href="#features" className="nav-link">Features</a>
           <a href="#how-it-works" className="nav-link">How It Works</a>
           <a href="#security" className="nav-link">Security</a>
+          <a href="/contact-sales" className="nav-link">Contact Sales</a>
         </nav>
         
         <div className="hidden md:flex items-center space-x-4">
           <Button variant="ghost" className="hover:bg-secondary" onClick={() => navigate('/login')}>Log In</Button>
-          <Button className="rounded-lg" onClick={() => navigate('/signup')}>Sign Up</Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="hover:bg-secondary">
+                <User className="h-5 w-5" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => navigate('/login')}>
+                Login
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate('/signup')}>
+                Sign Up
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate('/logout')}>
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
         
         {/* Mobile Menu Toggle */}
@@ -60,6 +84,7 @@ const Header = () => {
             <a href="#features" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Features</a>
             <a href="#how-it-works" className="nav-link" onClick={() => setMobileMenuOpen(false)}>How It Works</a>
             <a href="#security" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Security</a>
+            <a href="/contact-sales" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Contact Sales</a>
             <div className="flex flex-col space-y-2 pt-2 border-t">
               <Button variant="outline" onClick={() => { navigate('/login'); setMobileMenuOpen(false); }}>Log In</Button>
               <Button onClick={() => { navigate('/signup'); setMobileMenuOpen(false); }}>Sign Up</Button>
