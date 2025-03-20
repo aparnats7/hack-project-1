@@ -1,14 +1,18 @@
+import { useState } from 'react';
 import { Button } from '../components/ui/button';
 import { Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useToast } from '../components/ui/use-toast';
 
 const Pricing = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
 
   const plans = [
     {
       name: 'Starter',
-      price: '$99',
+      price: '₹8,245',
       period: 'month',
       description: 'Perfect for small businesses getting started with document verification.',
       features: [
@@ -23,7 +27,7 @@ const Pricing = () => {
     },
     {
       name: 'Professional',
-      price: '$299',
+      price: '₹24,890',
       period: 'month',
       description: 'Ideal for growing businesses with advanced verification needs.',
       features: [
@@ -59,6 +63,27 @@ const Pricing = () => {
     },
   ];
 
+  const handlePlanSelection = async (plan) => {
+    setLoading(true);
+    try {
+      if (plan.name === 'Enterprise') {
+        navigate('/contact-sales');
+      } else {
+        // Add analytics tracking here if needed
+        navigate('/signup', { state: { selectedPlan: plan.name } });
+      }
+    } catch (error) {
+      console.error('Error selecting plan:', error);
+      toast({
+        title: 'Error',
+        description: 'Unable to process your request. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background py-20">
       <div className="container">
@@ -75,7 +100,7 @@ const Pricing = () => {
               key={plan.name}
               className={`glass p-8 rounded-2xl relative ${
                 plan.popular ? 'border-2 border-primary' : ''
-              }`}
+              } hover:shadow-lg transition-shadow duration-300`}
             >
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
@@ -97,7 +122,7 @@ const Pricing = () => {
               <ul className="space-y-4 mb-8">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-center">
-                    <Check className="w-5 h-5 text-primary mr-2" />
+                    <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
                     <span>{feature}</span>
                   </li>
                 ))}
@@ -107,15 +132,10 @@ const Pricing = () => {
                 className={`w-full ${
                   plan.popular ? 'button-primary' : 'button-secondary'
                 }`}
-                onClick={() => {
-                  if (plan.name === 'Enterprise') {
-                    navigate('/contact-sales');
-                  } else {
-                    navigate('/signup');
-                  }
-                }}
+                onClick={() => handlePlanSelection(plan)}
+                disabled={loading}
               >
-                {plan.cta}
+                {loading ? 'Processing...' : plan.cta}
               </Button>
             </div>
           ))}
@@ -130,6 +150,7 @@ const Pricing = () => {
             variant="outline"
             size="lg"
             onClick={() => navigate('/contact-sales')}
+            disabled={loading}
           >
             Contact Sales
           </Button>
