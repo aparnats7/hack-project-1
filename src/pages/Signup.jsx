@@ -57,183 +57,248 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">Create an Account</CardTitle>
-          <CardDescription className="text-center">
-            Join our secure document verification platform
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="fullName">Full Name</Label>
-              <Input
-                id="fullName"
-                {...register('fullName')}
-                placeholder="John Doe"
-              />
-              {errors.fullName && (
-                <p className="text-sm text-red-500">{errors.fullName.message}</p>
-              )}
+    <div className="min-h-screen flex bg-gray-50">
+      {/* Left side with title and features */}
+      <div className="hidden lg:flex lg:w-1/2 bg-primary/5 items-center justify-center p-12">
+        <div className="max-w-lg">
+          <h1 className="text-4xl font-bold text-primary mb-6">
+            AI-Powered Secure Document Verification
+          </h1>
+          <div className="space-y-6">
+            <p className="text-lg text-muted-foreground">
+              Join our platform to verify documents securely using advanced AI technology. Our system ensures the authenticity and integrity of your documents through cutting-edge verification methods.
+            </p>
+            
+            <div className="space-y-4">
+              <div className="flex items-start space-x-3">
+                <div className="mt-1">
+                  <div className="w-2 h-2 rounded-full bg-primary"></div>
+                </div>
+                <div>
+                  <h3 className="font-semibold">Advanced AI Technology</h3>
+                  <p className="text-sm text-muted-foreground">State-of-the-art artificial intelligence for accurate document verification</p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-3">
+                <div className="mt-1">
+                  <div className="w-2 h-2 rounded-full bg-primary"></div>
+                </div>
+                <div>
+                  <h3 className="font-semibold">Blockchain Security</h3>
+                  <p className="text-sm text-muted-foreground">Immutable record-keeping and tamper-proof verification</p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-3">
+                <div className="mt-1">
+                  <div className="w-2 h-2 rounded-full bg-primary"></div>
+                </div>
+                <div>
+                  <h3 className="font-semibold">Real-time Verification</h3>
+                  <p className="text-sm text-muted-foreground">Instant results with detailed verification reports</p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-3">
+                <div className="mt-1">
+                  <div className="w-2 h-2 rounded-full bg-primary"></div>
+                </div>
+                <div>
+                  <h3 className="font-semibold">Multi-document Support</h3>
+                  <p className="text-sm text-muted-foreground">Verify various document types including IDs, certificates, and contracts</p>
+                </div>
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
-              <Input
-                id="username"
-                {...register('username')}
-                placeholder="johndoe"
-              />
-              {errors.username && (
-                <p className="text-sm text-red-500">{errors.username.message}</p>
-              )}
+            <div className="pt-4 border-t border-border">
+              <p className="text-sm text-muted-foreground">
+                Trusted by thousands of businesses worldwide for secure document verification.
+              </p>
             </div>
+          </div>
+        </div>
+      </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                {...register('email')}
-                placeholder="john@example.com"
-              />
-              {errors.email && (
-                <p className="text-sm text-red-500">{errors.email.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="phone">Phone</Label>
-              <Input
-                id="phone"
-                type="tel"
-                {...register('phone')}
-                placeholder="+1234567890"
-              />
-              {errors.phone && (
-                <p className="text-sm text-red-500">{errors.phone.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <div className="relative">
+      {/* Right side with form */}
+      <div className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle className="text-2xl font-bold text-center">Create an Account</CardTitle>
+            <CardDescription className="text-center">
+              Join our secure document verification platform
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="fullName">Full Name</Label>
                 <Input
-                  id="password"
-                  type={showPassword ? 'text' : 'password'}
-                  {...register('password')}
+                  id="fullName"
+                  {...register('fullName')}
+                  placeholder="John Doe"
                 />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2"
-                >
-                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                </button>
+                {errors.fullName && (
+                  <p className="text-sm text-red-500">{errors.fullName.message}</p>
+                )}
               </div>
-              {errors.password && (
-                <p className="text-sm text-red-500">{errors.password.message}</p>
-              )}
-            </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
-              <div className="relative">
+              <div className="space-y-2">
+                <Label htmlFor="username">Username</Label>
                 <Input
-                  id="confirmPassword"
-                  type={showConfirmPassword ? 'text' : 'password'}
-                  {...register('confirmPassword')}
+                  id="username"
+                  {...register('username')}
+                  placeholder="johndoe"
                 />
-                <button
-                  type="button"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2"
-                >
-                  {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                </button>
+                {errors.username && (
+                  <p className="text-sm text-red-500">{errors.username.message}</p>
+                )}
               </div>
-              {errors.confirmPassword && (
-                <p className="text-sm text-red-500">{errors.confirmPassword.message}</p>
+
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  {...register('email')}
+                  placeholder="john@example.com"
+                />
+                {errors.email && (
+                  <p className="text-sm text-red-500">{errors.email.message}</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="phone">Phone</Label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  {...register('phone')}
+                  placeholder="+1234567890"
+                />
+                {errors.phone && (
+                  <p className="text-sm text-red-500">{errors.phone.message}</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={showPassword ? 'text' : 'password'}
+                    {...register('password')}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2"
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
+                {errors.password && (
+                  <p className="text-sm text-red-500">{errors.password.message}</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword">Confirm Password</Label>
+                <div className="relative">
+                  <Input
+                    id="confirmPassword"
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    {...register('confirmPassword')}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2"
+                  >
+                    {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
+                {errors.confirmPassword && (
+                  <p className="text-sm text-red-500">{errors.confirmPassword.message}</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="dateOfBirth">Date of Birth (Optional)</Label>
+                <Input
+                  id="dateOfBirth"
+                  type="date"
+                  {...register('dateOfBirth')}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label>Gender (Optional)</Label>
+                <div className="flex gap-4">
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      value="male"
+                      {...register('gender')}
+                      className="form-radio"
+                    />
+                    <span>Male</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      value="female"
+                      {...register('gender')}
+                      className="form-radio"
+                    />
+                    <span>Female</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      value="other"
+                      {...register('gender')}
+                      className="form-radio"
+                    />
+                    <span>Other</span>
+                  </label>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="terms"
+                  {...register('terms')}
+                />
+                <Label htmlFor="terms" className="text-sm">
+                  I agree to the{' '}
+                  <Link to="/terms-and-conditions" className="text-primary hover:underline">
+                    Terms and Conditions
+                  </Link>
+                </Label>
+              </div>
+              {errors.terms && (
+                <p className="text-sm text-red-500">{errors.terms.message}</p>
               )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="dateOfBirth">Date of Birth (Optional)</Label>
-              <Input
-                id="dateOfBirth"
-                type="date"
-                {...register('dateOfBirth')}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label>Gender (Optional)</Label>
-              <div className="flex gap-4">
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    value="male"
-                    {...register('gender')}
-                    className="form-radio"
-                  />
-                  <span>Male</span>
-                </label>
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    value="female"
-                    {...register('gender')}
-                    className="form-radio"
-                  />
-                  <span>Female</span>
-                </label>
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    value="other"
-                    {...register('gender')}
-                    className="form-radio"
-                  />
-                  <span>Other</span>
-                </label>
-              </div>
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="terms"
-                {...register('terms')}
-              />
-              <Label htmlFor="terms" className="text-sm">
-                I agree to the{' '}
-                <a href="#" className="text-primary hover:underline">
-                  Terms and Conditions
-                </a>
-              </Label>
-            </div>
-            {errors.terms && (
-              <p className="text-sm text-red-500">{errors.terms.message}</p>
-            )}
-          </form>
-        </CardContent>
-        <CardFooter className="flex flex-col space-y-4">
-          <Button
-            type="submit"
-            className="w-full"
-            onClick={handleSubmit(onSubmit)}
-          >
-            Sign Up
-          </Button>
-          <p className="text-sm text-center">
-            Already have an account?{' '}
-            <Link to="/login" className="text-primary hover:underline">
-              Login Here
-            </Link>
-          </p>
-        </CardFooter>
-      </Card>
+            </form>
+          </CardContent>
+          <CardFooter className="flex flex-col space-y-4">
+            <Button
+              type="submit"
+              className="w-full"
+              onClick={handleSubmit(onSubmit)}
+            >
+              Sign Up
+            </Button>
+            <p className="text-sm text-center">
+              Already have an account?{' '}
+              <Link to="/login" className="text-primary hover:underline">
+                Login Here
+              </Link>
+            </p>
+          </CardFooter>
+        </Card>
+      </div>
     </div>
   );
 };

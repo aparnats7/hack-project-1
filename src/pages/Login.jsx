@@ -39,86 +39,91 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">Welcome Back</CardTitle>
-          <CardDescription className="text-center">
-            Sign in to your account to continue
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="emailOrUsername">Email or Username</Label>
-              <Input
-                id="emailOrUsername"
-                {...register('emailOrUsername')}
-                placeholder="john@example.com or johndoe"
-              />
-              {errors.emailOrUsername && (
-                <p className="text-sm text-red-500">{errors.emailOrUsername.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <div className="relative">
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      <div className="text-center py-8">
+        <h1 className="text-3xl font-bold text-primary">AI-Powered Secure Document Verification</h1>
+      </div>
+      <div className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle className="text-2xl font-bold text-center">Welcome Back</CardTitle>
+            <CardDescription className="text-center">
+              Sign in to your account to continue
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="emailOrUsername">Email or Username</Label>
                 <Input
-                  id="password"
-                  type={showPassword ? 'text' : 'password'}
-                  {...register('password')}
+                  id="emailOrUsername"
+                  {...register('emailOrUsername')}
+                  placeholder="john@example.com or johndoe"
                 />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2"
-                >
-                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                </button>
+                {errors.emailOrUsername && (
+                  <p className="text-sm text-red-500">{errors.emailOrUsername.message}</p>
+                )}
               </div>
-              {errors.password && (
-                <p className="text-sm text-red-500">{errors.password.message}</p>
-              )}
-            </div>
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  id="rememberMe"
-                  {...register('rememberMe')}
-                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-                />
-                <Label htmlFor="rememberMe" className="text-sm">
-                  Remember me
-                </Label>
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={showPassword ? 'text' : 'password'}
+                    {...register('password')}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2"
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
+                {errors.password && (
+                  <p className="text-sm text-red-500">{errors.password.message}</p>
+                )}
               </div>
-              <Link
-                to="/forgot-password"
-                className="text-sm text-primary hover:underline"
-              >
-                Forgot Password?
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="rememberMe"
+                    {...register('rememberMe')}
+                    className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                  />
+                  <Label htmlFor="rememberMe" className="text-sm">
+                    Remember me
+                  </Label>
+                </div>
+                <Link
+                  to="/forgot-password"
+                  className="text-sm text-primary hover:underline"
+                >
+                  Forgot Password?
+                </Link>
+              </div>
+            </form>
+          </CardContent>
+          <CardFooter className="flex flex-col space-y-4">
+            <Button
+              type="submit"
+              className="w-full"
+              onClick={handleSubmit(onSubmit)}
+            >
+              Sign In
+            </Button>
+            <p className="text-sm text-center">
+              Don't have an account?{' '}
+              <Link to="/signup" className="text-primary hover:underline">
+                Sign Up Here
               </Link>
-            </div>
-          </form>
-        </CardContent>
-        <CardFooter className="flex flex-col space-y-4">
-          <Button
-            type="submit"
-            className="w-full"
-            onClick={handleSubmit(onSubmit)}
-          >
-            Sign In
-          </Button>
-          <p className="text-sm text-center">
-            Don't have an account?{' '}
-            <Link to="/signup" className="text-primary hover:underline">
-              Sign Up Here
-            </Link>
-          </p>
-        </CardFooter>
-      </Card>
+            </p>
+          </CardFooter>
+        </Card>
+      </div>
     </div>
   );
 };
