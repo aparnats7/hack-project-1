@@ -1,4 +1,4 @@
-import { Brain, Shield, FileText, Clock, Users } from 'lucide-react';
+import { Brain, Shield, FileText, Clock, Users, Lock, CheckCircle2, ShieldCheck } from 'lucide-react';
 
 const Feature = ({ icon, title, description }) => {
   return (
@@ -13,39 +13,44 @@ const Feature = ({ icon, title, description }) => {
 const Features = () => {
   const features = [
     {
-      icon: <Brain />,
-      title: 'AI-Powered Verification',
-      description: 'Uses machine learning & OCR to analyze documents with unparalleled accuracy.',
+      icon: <Shield />,
+      title: 'ISO 27001 Security',
+      description: 'Enterprise-grade security infrastructure with comprehensive controls and regular third-party audits.',
     },
     {
-      icon: <Shield />,
-      title: 'Blockchain Security',
-      description: 'Tamper-proof storage & verification using advanced blockchain technology.',
+      icon: <ShieldCheck />,  // Fixed: Changed FileShield to ShieldCheck
+      title: 'GDPR Compliance',
+      description: 'Full compliance with EU data protection regulations, including data minimization and user rights.',
+    },
+    {
+      icon: <CheckCircle2 />,
+      title: 'SOC 2 Type II',
+      description: 'Independent verification of security controls, data protection, and operational excellence.',
+    },
+    {
+      icon: <Lock />,
+      title: 'Zero Trust Security',
+      description: 'Continuous verification of user identity and device security with multi-factor authentication.',
     },
     {
       icon: <FileText />,
-      title: 'Multi-Document Support',
-      description: 'Supports PDFs, images, government IDs, and various document formats.',
+      title: 'Secure Document Handling',
+      description: 'End-to-end encryption and secure storage for all document types with tamper-proof verification.',
     },
     {
       icon: <Clock />,
-      title: 'Real-Time Verification',
-      description: 'Instant results with advanced fraud detection capabilities.',
-    },
-    {
-      icon: <Users />,
-      title: 'User-Friendly Interface',
-      description: 'Simple, fast, and accessible interface designed for all users.',
-    },
+      title: 'Real-Time Security',
+      description: 'Continuous monitoring and instant threat detection with automated security responses.',
+    }
   ];
 
   return (
     <section id="features" className="py-16 md:py-24">
       <div className="section-container">
         <div className="max-w-2xl mx-auto text-center mb-16">
-          <h2 className="section-title">Unmatched Features</h2>
+          <h2 className="section-title">Enterprise-Grade Security & Compliance</h2>
           <p className="section-subtitle">
-            Our platform combines cutting-edge technology with intuitive design to provide the most secure and efficient document verification available.
+            Our platform combines cutting-edge security technology with comprehensive compliance standards to ensure your documents are protected with the highest level of security available.
           </p>
         </div>
         
