@@ -1,69 +1,94 @@
-# Welcome to your Lovable project
+# VeriTrustAI Dashboard
 
-## Project info
+A modern, intuitive, and user-friendly dashboard for VeriTrustAI's AI-powered document verification platform. Built with React, TypeScript, and Tailwind CSS.
 
-**URL**: https://lovable.dev/projects/25273e2f-4816-4f60-9e4f-fedeb2b407b0
+## Features
 
-## How can I edit this code?
+- Personalized welcome message and user status
+- Step-by-step document verification process
+- Drag-and-drop document upload interface
+- Real-time statistics and analytics
+- Responsive design for all devices
+- Modern UI with smooth animations
+- Secure document handling
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+- React 18
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- Recharts
+- React Dropzone
+- Heroicons
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/25273e2f-4816-4f60-9e4f-fedeb2b407b0) and start prompting.
+## Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- Node.js (v14 or higher)
+- npm or yarn
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Installation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/veritrustai-dashboard.git
+cd veritrustai-dashboard
 ```
 
-**Edit a file directly in GitHub**
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+3. Start the development server:
+```bash
+npm run dev
+# or
+yarn dev
+```
 
-**Use GitHub Codespaces**
+4. Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Building for Production
 
-## What technologies are used for this project?
+```bash
+npm run build
+# or
+yarn build
+```
 
-This project is built with .
+The build output will be in the `dist` directory.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Project Structure
 
-## How can I deploy this project?
+```
+src/
+  components/
+    Dashboard/
+      Dashboard.tsx           # Main dashboard component
+      DashboardLayout.tsx     # Layout wrapper with sidebar
+      WelcomeSection.tsx      # Welcome message and status
+      VerificationProgress.tsx # Step-by-step progress tracker
+      DocumentUpload.tsx      # Document upload interface
+      StatisticsOverview.tsx  # Analytics and charts
+```
 
-Simply open [Lovable](https://lovable.dev/projects/25273e2f-4816-4f60-9e4f-fedeb2b407b0) and click on Share -> Publish.
+## Contributing
 
-## I want to use a custom domain - is that possible?
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+For support, email support@veritrustai.com or join our Slack channel.
