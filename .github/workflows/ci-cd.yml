@@ -1,0 +1,111 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+      redis:
+        image: redis:latest
+        ports:
+          - 6379:6379
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r backend/requirements.txt
+        pip install pytest pytest-cov black flake8 mypy
+    
+    - name: Run tests
+      run: |
+        pytest backend/tests --cov=backend/app --cov-report=xml
+      env:
+        MONGODB_URI: mongodb://localhost:27017/veritrustai_test
+        REDIS_HOST: localhost
+        REDIS_PORT: 6379
+        JWT_SECRET_KEY: test_secret
+        AWS_ACCESS_KEY: test_key
+        AWS_SECRET_KEY: test_secret
+        SENTRY_DSN: test_dsn
+    
+    - name: Run linting
+      run: |
+        black --check backend/app
+        flake8 backend/app
+        mypy backend/app
+    
+    - name: Upload coverage report
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        fail_ci_if_error: true
+
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+    
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+    
+    - name: Build and push Docker image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: veritrustai
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f backend/Dockerfile .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+    
+    - name: Update ECS service
+      run: |
+        aws ecs update-service --cluster veritrustai-cluster --service veritrustai-service --force-new-deployment
+    
+    - name: Deploy frontend
+      run: |
+        cd frontend
+        npm install
+        npm run build
+        aws s3 sync build/ s3://${{ secrets.FRONTEND_BUCKET }} --delete
+
+  notify:
+    needs: [test, deploy]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+    - name: Send notification
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const status = ${{ job.status }}
+          const message = `Pipeline ${status}: ${{ github.workflow }}`
+          // Add your notification logic here (e.g., Slack, email) 
