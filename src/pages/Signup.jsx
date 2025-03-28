@@ -6,11 +6,11 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useAuth } from '@/hooks/useAuth';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast.js';
 
 const signupSchema = z.object({
   fullName: z.string().min(2, 'Full name must be at least 2 characters'),
@@ -45,6 +45,7 @@ const Signup = () => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(signupSchema),
@@ -302,9 +303,16 @@ const Signup = () => {
               </div>
 
               <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="terms"
-                  {...register('terms')}
+                <Controller
+                  name="terms"
+                  control={control}
+                  render={({ field }) => (
+                    <Checkbox
+                      id="terms"
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  )}
                 />
                 <Label htmlFor="terms" className="text-sm">
                   I agree to the{' '}
@@ -394,4 +402,4 @@ const Signup = () => {
   );
 };
 
-export default Signup; 
+export default Signup;

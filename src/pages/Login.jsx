@@ -4,20 +4,25 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/use-toast.js';
 
 const loginSchema = z.object({
-  emailOrUsername: z.string().min(1, 'Email or username is required'),
+  email: z.string().email('Invalid email format'),
   password: z.string().min(1, 'Password is required'),
   rememberMe: z.boolean().optional(),
 });
 
 const Login = () => {
   const navigate = useNavigate();
+  const { signInWithEmail, signInWithGoogle } = useAuth();
+  const { toast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -29,12 +34,43 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      // Here you would typically make an API call to authenticate the user
-      console.log('Form submitted:', data);
-      // After successful login, redirect to dashboard
+      setIsLoading(true);
+      await signInWithEmail(data.email, data.password);
+      toast({
+        title: "Success",
+        description: "You have successfully logged in",
+      });
       navigate('/dashboard');
     } catch (error) {
       console.error('Login error:', error);
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      setIsLoading(true);
+      await signInWithGoogle();
+      toast({
+        title: "Success",
+        description: "You have successfully logged in with Google",
+      });
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Google sign-in error:', error);
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -54,71 +90,97 @@ const Login = () => {
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="emailOrUsername">Email or Username</Label>
+                <Label htmlFor="email">Email</Label>
                 <Input
-                  id="emailOrUsername"
-                  {...register('emailOrUsername')}
-                  placeholder="john@example.com or johndoe"
+                  id="email"
+                  type="email"
+                  {...register('email')}
+                  placeholder="john@example.com"
+                  className={errors.email ? "border-red-500" : ""}
                 />
-                {errors.emailOrUsername && (
-                  <p className="text-sm text-red-500">{errors.emailOrUsername.message}</p>
+                {errors.email && (
+                  <p className="text-sm text-red-500">{errors.email.message}</p>
                 )}
               </div>
-
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
                 <div className="relative">
                   <Input
                     id="password"
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                     {...register('password')}
+                    className={errors.password ? "border-red-500 pr-10" : "pr-10"}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 -translate-y-1/2"
                   >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4 text-gray-500" />
+                    ) : (
+                      <Eye className="h-4 w-4 text-gray-500" />
+                    )}
                   </button>
                 </div>
                 {errors.password && (
                   <p className="text-sm text-red-500">{errors.password.message}</p>
                 )}
               </div>
-
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center">
                   <input
                     type="checkbox"
                     id="rememberMe"
                     {...register('rememberMe')}
                     className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
                   />
-                  <Label htmlFor="rememberMe" className="text-sm">
+                  <Label htmlFor="rememberMe" className="ml-2">
                     Remember me
                   </Label>
                 </div>
                 <Link
                   to="/forgot-password"
-                  className="text-sm text-primary hover:underline"
+                  className="text-sm font-medium text-primary hover:text-primary/80"
                 >
-                  Forgot Password?
+                  Forgot password?
                 </Link>
               </div>
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Signing in...
+                  </>
+                ) : (
+                  "Sign in"
+                )}
+              </Button>
             </form>
+            <div className="mt-4">
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                onClick={handleGoogleSignIn}
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Signing in...
+                  </>
+                ) : (
+                  "Sign in with Google"
+                )}
+              </Button>
+            </div>
           </CardContent>
-          <CardFooter className="flex flex-col space-y-4">
-            <Button
-              type="submit"
-              className="w-full"
-              onClick={handleSubmit(onSubmit)}
-            >
-              Sign In
-            </Button>
-            <p className="text-sm text-center">
+          <CardFooter className="justify-center">
+            <p className="text-sm text-gray-600">
               Don't have an account?{' '}
-              <Link to="/signup" className="text-primary hover:underline">
-                Sign Up Here
+              <Link to="/signup" className="font-medium text-primary hover:text-primary/80">
+                Sign up
               </Link>
             </p>
           </CardFooter>
@@ -128,4 +190,4 @@ const Login = () => {
   );
 };
 
-export default Login; 
+export default Login;

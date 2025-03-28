@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { 
   createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword,
   signInWithPopup, 
   GoogleAuthProvider,
   onAuthStateChanged,
+  sendPasswordResetEmail,
   signOut
 } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
@@ -33,12 +35,33 @@ export const useAuth = () => {
     }
   };
 
+  const signInWithEmail = async (email, password) => {
+    try {
+      setError(null);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      return userCredential.user;
+    } catch (error) {
+      setError(error.message);
+      throw error;
+    }
+  };
+
   const signInWithGoogle = async () => {
     try {
       setError(null);
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       return result.user;
+    } catch (error) {
+      setError(error.message);
+      throw error;
+    }
+  };
+
+  const resetPassword = async (email) => {
+    try {
+      setError(null);
+      await sendPasswordResetEmail(auth, email);
     } catch (error) {
       setError(error.message);
       throw error;
@@ -60,7 +83,9 @@ export const useAuth = () => {
     loading,
     error,
     signUpWithEmail,
+    signInWithEmail,
     signInWithGoogle,
+    resetPassword,
     logout
   };
-}; 
+};
